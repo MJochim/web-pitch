@@ -18,6 +18,7 @@ export class PitchDisplay {
 		this.a1Frequency = config.a1Frequency;
 		this.lowestFrequencyInDisplay = config.lowestFrequencyInDisplay;
 		this.semitoneSize = this.canvas.clientHeight / 12 / config.octavesInDisplay;
+		this.sampleWidth = config.sampleWidth;
 	}
 
 	noteToPitch(note) {
@@ -56,15 +57,17 @@ export class PitchDisplay {
 
 		this.drawSemitoneLines();
 
+		const width = this.canvas.width / this.sampleWidth;
+
 		let minX, maxX;
 
-		if (this.trackList[0].data.length > this.canvas.width / 2) {
-			maxX = Math.round(this.trackList[0].data.length + this.canvas.width / 2);
+		if (this.trackList[0].data.length > width / 2) {
+			maxX = Math.round(this.trackList[0].data.length + width / 2);
 		} else {
-			maxX = this.canvas.width;
+			maxX = width;
 		}
 
-		minX = maxX - this.canvas.width;
+		minX = maxX - width;
 
 		for (let track of this.trackList) {
 			this.context.strokeStyle = track.color;
@@ -74,9 +77,9 @@ export class PitchDisplay {
 			this.context.moveTo(0,0);
 			for (let i = minX; i < maxX; ++i) {
 				if (notes[i] !== 0 && notes[i-1] !== 0) {
-					this.context.lineTo(i - minX, this.pitchToPosition(notes[i]));
+					this.context.lineTo((i - minX) * this.sampleWidth, this.pitchToPosition(notes[i]));
 				} else {
-					this.context.moveTo(i - minX, this.pitchToPosition(notes[i]));
+					this.context.moveTo((i - minX) * this.sampleWidth, this.pitchToPosition(notes[i]));
 				}
 			}
 			this.context.stroke();

@@ -5,4 +5,5 @@ export const config = {
 	lowestFrequencyInDisplay: 110,
 	a1Frequency: 440,
 	octavesInDisplay: 3,
+	sampleWidth: 10,
 };
