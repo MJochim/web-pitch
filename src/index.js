@@ -94,7 +94,7 @@ function draw(time) {
 }
 
 window.addEventListener('load', async () => {
-	const canvas = document.querySelector('#history_canvas');
+	const canvas = document.querySelector('#pitch_canvas');
 	pitchDisplay = new PitchDisplay(trackList, canvas);
 
 	document.querySelector('#btn_zoom_in_y') .addEventListener("click", () => {pitchDisplay.semitoneSize *= 1.1;});

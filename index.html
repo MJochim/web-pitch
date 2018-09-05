@@ -7,14 +7,16 @@
 		<script src="dist/main.js" type="module"></script>
 	</head>
 	<body>
-		<p>
+		<div id="controls">
 			<button id="btn_zoom_in_y">+</button>
-			<button id="btn_zoom_out_y">-</button><br>
+			<button id="btn_zoom_out_y">-</button>
 			<button id="btn_move_down">Down</button>
-			<button id="btn_move_up">Up</button><br>
+			<button id="btn_move_up">Up</button>
 			<span id="info"></span>
-		</p>
+		</div>
 
-		<canvas id="history_canvas"></canvas>
+		<div id="canvas_container">
+			<canvas id="pitch_canvas"></canvas>
+		</div>
 	</body>
 </html>

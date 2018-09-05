@@ -3,9 +3,15 @@ import {config} from "../config.js";
 export class PitchDisplay {
 	constructor(trackList, canvas) {
 		this.trackList = trackList;
+
 		this.canvas = canvas;
 		this.canvas.width = this.canvas.clientWidth;
 		this.canvas.height = this.canvas.clientHeight;
+		window.addEventListener('resize', () => {
+			this.canvas.width = this.canvas.clientWidth;
+			this.canvas.height = this.canvas.clientHeight;
+		});
+
 		this.context = this.canvas.getContext('2d');
 
 		this.followFrequency = config.followFrequency;
