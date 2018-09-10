@@ -1,5 +1,7 @@
 export const config = {
-	pitchSampleRate: 10,
+	// bufferSize 2048 has a period of ~46 ms at an audio sample rate of 44100 Hz
+	// Must be a power of two.
+	pitchAnalysisBufferSize: 2048,
 
 	followFrequency: false,
 	lowestFrequencyInDisplay: 110,

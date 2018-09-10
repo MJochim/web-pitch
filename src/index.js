@@ -5,9 +5,11 @@ import {Track} from "./track.class.js";
 import {PitchDisplay} from "./pitch-display.class.js";
 const Pitchfinder = require("pitchfinder");
 
+let audioContext;
+let detectPitch;
 let pitchDisplay;
-const detectPitch = Pitchfinder.YIN();
-const pitchPeriod = 1000 / config.pitchSampleRate;
+let pitchPeriod;
+let pitchSampleRate;
 
 async function startMicrophone() {
 	const mediaStream = await navigator.mediaDevices.getUserMedia({
@@ -22,30 +24,23 @@ async function startMicrophone() {
 			},
 	});
 
-	// Calculate buffer size
-	const audioContext = new AudioContext();
-	const minimumBufferSize = audioContext.sampleRate / config.pitchSampleRate;
-	const nextPowerOfTwo = 2 ** Math.ceil(Math.log(minimumBufferSize) / Math.log(2));
-	const bufferSize = nextPowerOfTwo;
-	const buffer = new Float32Array(bufferSize);
-
-	// Connect the microphone stream to an analyser node
+	// Connect the microphone stream to a script processor node
 	const mediaStreamSource = audioContext.createMediaStreamSource(mediaStream);
-	const analyser = audioContext.createAnalyser();
-	analyser.fftSize = bufferSize; 
-	mediaStreamSource.connect(analyser);
-	
-	setInterval( () => {
-		analyser.getFloatTimeDomainData(buffer);
-		const pitch = detectPitch(buffer);
+	const scriptProcessor = audioContext.createScriptProcessor(config.pitchAnalysisBufferSize);
+	mediaStreamSource.connect(scriptProcessor);
+	scriptProcessor.connect(audioContext.destination);
 
+	scriptProcessor.addEventListener('audioprocess', (audioProcessingEvent) => {
+		let inputData = audioProcessingEvent.inputBuffer.getChannelData(0);
+
+		const pitch = detectPitch(inputData);
 
 		if (pitch === null || pitch > 10000) {
 			trackList[0].data.push(0);
 		} else {
 			trackList[0].data.push(pitch);
 		}
-	}, pitchPeriod);
+	});
 }
 
 async function startMidi() {
@@ -94,6 +89,12 @@ function draw(time) {
 }
 
 window.addEventListener('load', async () => {
+	audioContext = new AudioContext();
+	detectPitch = Pitchfinder.YIN({sampleRate: audioContext.sampleRate});
+
+	pitchSampleRate = audioContext.sampleRate / config.pitchAnalysisBufferSize;
+	pitchPeriod = 1 / pitchSampleRate * 1000; // Factor 1000 to convert seconds to milliseconds
+
 	const canvas = document.querySelector('#pitch_canvas');
 	pitchDisplay = new PitchDisplay(trackList, canvas);
 
