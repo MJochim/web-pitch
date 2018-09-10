@@ -56,7 +56,7 @@ async function startMidi() {
 
 		let currentNoteNumber;
 		const track = new Track();
-		track.color = "green";
+		track.color = "rgba(0, 255, 0, 0.5)";
 		trackList.push(track);
 
 		setInterval(() => {
