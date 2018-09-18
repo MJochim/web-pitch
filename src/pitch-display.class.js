@@ -57,7 +57,7 @@ export class PitchDisplay {
 
 		this.drawSemitoneLines();
 
-		const width = this.canvas.width / this.sampleWidth;
+		const width = Math.round(this.canvas.width / this.sampleWidth);
 
 		let minX, maxX;
 
