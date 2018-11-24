@@ -44,6 +44,10 @@ async function startMicrophone() {
 }
 
 async function startMidi() {
+        if (!navigator.requestMIDIAccess) {
+                return;
+        }
+
 	const access = await navigator.requestMIDIAccess();
 
 	for (let input of access.inputs.values()) {
@@ -102,6 +106,8 @@ window.addEventListener('load', async () => {
 	document.querySelector('#btn_zoom_out_y').addEventListener("click", () => {pitchDisplay.semitoneSize /= 1.1;});
 	document.querySelector('#btn_move_up')   .addEventListener("click", () => {pitchDisplay.pan(+1);});
 	document.querySelector('#btn_move_down') .addEventListener("click", () => {pitchDisplay.pan(-1);});
+	document.querySelector('#btn_move_tonic_up') .addEventListener("click", () => {pitchDisplay.moveTonic(+1);});
+	document.querySelector('#btn_move_tonic_down') .addEventListener("click", () => {pitchDisplay.moveTonic(-1);});
 
 	startMicrophone();
 	startMidi();
