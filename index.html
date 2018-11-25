@@ -7,15 +7,49 @@
 		<script src="dist/main.js" type="module"></script>
 	</head>
 	<body>
-		<div id="controls">
+		<div id="controls_navigation">
 			<button id="btn_zoom_in_y">+</button>
 			<button id="btn_zoom_out_y">-</button>
 			<button id="btn_move_down">Down</button>
 			<button id="btn_move_up">Up</button>
+		</div>
+
+                <div id="controls_scale">
 			<button id="btn_move_tonic_down">Tonic Down</button>
 			<button id="btn_move_tonic_up">Tonic Up</button>
-			<span id="info"></span>
-		</div>
+			<button id="btn_major_scale">Major scale</button>
+			<button id="btn_minor_scale">Minor scale</button>
+                        <div id="scale_selection">
+                            <div class="major">
+                                B major<br>
+                                A#/B♭ major<br>
+                                A major<br>
+                                G#/A♭ major<br>
+                                G major<br>
+                                F#/G♭ major<br>
+                                F major<br>
+                                E major<br>
+                                D#/E♭ major<br>
+                                D major<br>
+                                C#/D♭ major<br>
+                                C major<br>
+                            </div>
+                            <div class="minor">
+                                G#/A♭ minor<br>
+                                G minor<br>
+                                F#/G♭ minor<br>
+                                F minor<br>
+                                E minor<br>
+                                D#/E♭ minor<br>
+                                D minor<br>
+                                C#/D♭ minor<br>
+                                C minor<br>
+                                B minor<br>
+                                A#/B♭ minor<br>
+                                A minor<br>
+                            </div>
+                    </div>
+                </div>
 
 		<div id="canvas_container">
 			<canvas id="pitch_canvas"></canvas>

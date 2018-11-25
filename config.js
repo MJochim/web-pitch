@@ -8,5 +8,6 @@ export const config = {
 	a1Frequency: 440,
 	octavesInDisplay: 3,
 	sampleWidth: 10,
-	tonicNote: 0 // must be within [0,11] (the numbers represent the tones C, C#, ..., B)
+	doNote: 0, // must be within [0,11] (the numbers represent the tones C, C#, ..., B)
+        scaleType: "major"
 };

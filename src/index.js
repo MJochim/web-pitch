@@ -106,8 +106,24 @@ window.addEventListener('load', async () => {
 	document.querySelector('#btn_zoom_out_y').addEventListener("click", () => {pitchDisplay.semitoneSize /= 1.1;});
 	document.querySelector('#btn_move_up')   .addEventListener("click", () => {pitchDisplay.pan(+1);});
 	document.querySelector('#btn_move_down') .addEventListener("click", () => {pitchDisplay.pan(-1);});
-	document.querySelector('#btn_move_tonic_up') .addEventListener("click", () => {pitchDisplay.moveTonic(+1);});
-	document.querySelector('#btn_move_tonic_down') .addEventListener("click", () => {pitchDisplay.moveTonic(-1);});
+
+	document.querySelector('#btn_major_scale').addEventListener("click", () => {
+            pitchDisplay.setScaleType("major");
+            document.querySelector('#scale_selection').style.setProperty("--show_major", 1);
+        });
+	document.querySelector('#btn_minor_scale').addEventListener("click", () => {
+            pitchDisplay.setScaleType("minor");
+            document.querySelector('#scale_selection').style.setProperty("--show_major", 0);
+        });
+
+	document.querySelector('#btn_move_tonic_up')  .addEventListener("click", () => {
+            pitchDisplay.moveTonic(+1);
+            document.querySelector('#scale_selection').style.setProperty("--semitones_from_c_major", pitchDisplay.doNote);
+        });
+	document.querySelector('#btn_move_tonic_down').addEventListener("click", () => {
+            pitchDisplay.moveTonic(-1);
+            document.querySelector('#scale_selection').style.setProperty("--semitones_from_c_major", pitchDisplay.doNote);
+        });
 
 	startMicrophone();
 	startMidi();

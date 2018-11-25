@@ -20,7 +20,8 @@ export class PitchDisplay {
 		this.lowestFrequencyInDisplay = config.lowestFrequencyInDisplay;
 		this.semitoneSize = this.canvas.clientHeight / 12 / config.octavesInDisplay;
 		this.sampleWidth = config.sampleWidth;
-                this.tonicNote = config.tonicNote;
+                this.doNote = config.doNote;
+                this.scaleType = config.scaleType;
 	}
 
 	noteToPitch(note) {
@@ -43,7 +44,7 @@ export class PitchDisplay {
               
         noteNumberToSolmisationSyllable (note) {
             const semitonesAwayFromC = note % 12;
-            const semitonesAwayFromTonic = semitonesAwayFromC - this.tonicNote;
+            const semitonesAwayFromTonic = semitonesAwayFromC - this.doNote;
 
             switch (semitonesAwayFromTonic) {
                 case 0: return "Do";
@@ -131,18 +132,33 @@ export class PitchDisplay {
 
 		for (let i = lowestNote; i <= highestNote; ++i) {
                         const semitonesAwayFromC = i % 12;
-                        const semitonesAwayFromTonic = semitonesAwayFromC - this.tonicNote;
+                        const semitonesAwayFromTonic = semitonesAwayFromC - this.doNote;
 
                         switch (semitonesAwayFromTonic) {
                             case 0:
                                 this.context.setLineDash([]);
-                                this.context.strokeStyle = "black";
+
+                                if (this.scaleType === "major") {
+                                    this.context.strokeStyle = "black";
+                                } else {
+                                    this.context.strokeStyle = "darkgrey";
+                                }
+
+                                break;
+                            case 9: case -3:
+                                this.context.setLineDash([]);
+
+                                if (this.scaleType === "minor") {
+                                    this.context.strokeStyle = "black";
+                                } else {
+                                    this.context.strokeStyle = "darkgrey";
+                                }
+
                                 break;
                             case 2: case -10:
                             case 4: case -8:
                             case 5: case -7:
                             case 7: case -5:
-                            case 9: case -3:
                             case 11: case -1:
                                 this.context.setLineDash([]);
                                 this.context.strokeStyle = "darkgrey";
@@ -195,14 +211,20 @@ export class PitchDisplay {
 	}
 
         moveTonic (stepSize) {
-            this.tonicNote += stepSize;
+            this.doNote += stepSize;
 
-            // Tonic must remain within [0;11]
-            if (this.tonicNote >= 12) {
-                this.tonicNote = this.tonicNote % 12;
+            // Do must remain within [0;11]
+            if (this.doNote >= 12) {
+                this.doNote = this.doNote % 12;
             }
-            if (this.tonicNote < 0) {
-                this.tonicNote = 12 - (-this.tonicNote % 12);
+            if (this.doNote < 0) {
+                this.doNote = 12 - (-this.doNote % 12);
+            }
+        }
+
+        setScaleType (type) {
+            if (type === "major" || type === "minor") {
+                this.scaleType = type;
             }
         }
 }
