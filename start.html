@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <meta charset="utf8">
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+        }
+
+        button {
+            border: 0;
+            padding: 15px 50px;
+            min-width: 250px;
+            background-color: #e14d4d;
+        }
+
+        #song_list {
+            flex-basis: 50%;
+            border: 1px solid black;
+            width: 770px;
+            padding: 0;
+        }
+
+        #song_list > ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        #song_list > ul > li {
+            height: 50px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        #song_list > ul > li:nth-child(odd) {
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Web-Pitch</h1>
+
+    <div>
+        <button>Just sing</button>
+    </div>
+
+    <div>
+        <button>New song</button>
+    </div>
+
+    <div id="song_list">
+        <ul>
+            <li>The Falcon</li>
+            <li>Ljóð í sand</li>
+            <li>Blackbird</li>
+        </ul>
+    </div>
+</body>
+
+</html>
